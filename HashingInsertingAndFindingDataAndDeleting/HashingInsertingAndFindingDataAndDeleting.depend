@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1637405521 source:c:\users\vaishnavi\desktop\c projects\hashinginsertingandfindingdataanddeleting\main.c
+	<stdio.h>
+	<stdlib.h>
+

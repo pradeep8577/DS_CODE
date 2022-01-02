@@ -1,0 +1,360 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+  int data;
+  struct node *next;
+  struct node *previse;
+};
+typedef struct node Node;
+void DisplayInReversOrder(Node *ptr);
+void DisplayList(Node *p);
+void InsertingAtBeg(Node **ptr,int *data);
+void InsertingAtEnd(Node **ptr,int *data);
+void InsertingAtPerticularPosition(Node **h,int *data,int *position);
+int NumberOfElementPresent(Node *head);
+void DeletingFromeBeg(Node **ptr);
+void deletingFromEnd(Node ** ptr);
+void deletingAtPerticularPosition(Node **ptr,int *position);
+void SearchingForElement(Node *ptr,int *data);
+int main()
+{
+    Node * head=NULL;
+
+    //Nodes of double link list
+    Node *H1=(Node*)malloc(sizeof(Node));
+    H1->data=25;
+    H1->previse=NULL;
+    H1->next=NULL;
+    head=H1;
+
+    Node *H2=(Node*)malloc(sizeof(Node));
+    H2->data=26;
+    H2->previse=H1;
+    H2->next=NULL;
+    H1->next=H2;
+
+    Node *H3=(Node*)malloc(sizeof(Node));
+    H3->data=27;
+    H3->previse=H2;
+    H3->next=NULL;
+    H2->next=H3;
+    printf("Enter your choice 1 for display link list,2 for displaying reverse order,\n");
+    printf("3 for inserting at beg,4 for inserting at end,\n");
+    printf("5 for inserting at position,6 deleting at beg\n");
+    printf("7 for deleting at end ,8 deleting at particular position\n");
+    printf("9 for searching for element in list,10 for Number of element present in list\n");
+    int choice;
+    while(1)
+    {
+      printf("\nEnter choice:");
+      scanf("%d",&choice);
+      switch(choice)
+      {
+        case 1:{
+           DisplayList(head);
+           break;
+        }
+        case 2:{
+            DisplayInReversOrder(head);
+            break;
+        }
+        case 3:{
+            int data;
+            printf("Enter data to add at beg:");
+            scanf("%d",&data);
+            InsertingAtBeg(&head,&data);
+            break;
+        }
+        case 4:{
+            int data1;
+            printf("Enter data to add at end:");
+            scanf("%d",&data1);
+            InsertingAtEnd(&head,&data1);
+            break;
+        }
+        case 5:{
+            int position,data2;
+            printf("Enter position at which you want to insert data:");
+            scanf("%d",&position);
+            printf("Enter data to inserting at position:");
+            scanf("%d",&data2);
+            InsertingAtPerticularPosition(&head,&data2,&position);
+            break;
+        }
+        case 6:{
+            printf("Deleting element at beg\n");
+            DeletingFromeBeg(&head);
+            break;
+        }
+        case 7:{
+              printf("Deleting element at end\n");
+              deletingFromEnd(&head);
+              break;
+         }
+         case 8:{
+             int position1;
+             printf("Enter position at which element is to delete:");
+             scanf("%d",&position1);
+             deletingAtPerticularPosition(&head,&position1);
+             break;
+          }
+          case 9:{
+             int data3;
+             printf("Enter data for your searching:");
+             scanf("%d",&data3);
+             SearchingForElement(head,&data3);
+             break;
+          }
+          case 10:{
+              printf("%d\n",NumberOfElementPresent(head));
+              break;
+          }
+          default:{
+             break;
+          }
+       }
+    }
+
+
+
+
+     free(H1);
+     free(H2);
+     free(H3);
+    return 0;
+}
+void DisplayInReversOrder(Node *ptr)
+{
+  if(ptr==NULL)
+  {
+    printf("List is empty");
+  }
+  else
+  {
+    printf("\nList in revers order:\n");
+    while(ptr->next!=NULL)
+    {
+      ptr=ptr->next;
+    }
+    while(ptr!=NULL)
+    {
+       printf("%d ",ptr->data);
+       ptr=ptr->previse;
+    }
+  }
+
+}
+void DisplayList(Node *p)
+{
+
+   if(p==NULL)
+   {
+     printf("List is empty");
+   }
+   else
+   {
+     printf("Elements in list are:\n");
+     while(p!=NULL)
+     {
+       printf("%d ",p->data);
+       p=p->next;
+     }
+   }
+}
+void InsertingAtBeg(Node **ptr,int *data)
+{
+   Node *r=*ptr;
+   if(*ptr==NULL)
+   {
+     printf("List is empty");
+   }
+   else
+   {
+       Node * newNode=(Node *)malloc(sizeof(Node));
+       newNode->data=*data;
+       newNode->previse=NULL;
+       newNode->next=r;
+       r->previse=newNode;
+       *ptr=newNode;
+    }
+}
+void InsertingAtEnd(Node **ptr,int *data)
+{
+  Node *tem=*ptr;
+  if(*ptr==NULL)
+  {
+    printf("List is empty");
+  }
+  else
+  {
+     Node *EndNode=(Node*)malloc(sizeof(Node));
+     EndNode->data=*(data);
+     EndNode->next=NULL;
+     EndNode->next=NULL;
+     while(tem->next!=NULL)
+     {
+       tem=tem->next;
+     }
+     tem->next=EndNode;
+     EndNode->previse=tem;
+     }
+}
+void InsertingAtPerticularPosition(Node **h,int *data,int *position)
+{
+    Node *n=*h;
+    Node *ptr;
+    if(*h==NULL)
+    {
+      printf("List is empty");
+    }
+    else
+    {
+      if(*(position)==1)
+      {
+         Node * newNode=(Node *)malloc(sizeof(Node));
+         newNode->data=*data;
+         newNode->previse=NULL;
+         newNode->next=n;
+         n->previse=newNode;
+         *h=newNode;
+      }
+      else if(*(position)==NumberOfElementPresent(*h)+1)
+      {
+        Node *EndNode=(Node *)malloc(sizeof(Node));
+        EndNode->data=*(data);
+        while(n->next!=NULL)
+        {
+          n=n->next;
+        }
+        n->next=EndNode;
+        EndNode->previse=n;
+        EndNode->next=NULL;
+
+      }
+     else if(*(position)>1 && *(position)<NumberOfElementPresent(*h)+1)
+      {
+          int count=1;
+          Node *q=(Node *)malloc(sizeof(Node));
+          q->data=*(data);
+          while(count<*(position))
+          {
+             ptr=n;
+             n=n->next;
+             count++;
+          }
+          q->previse=ptr->next;
+          q->next=n;
+          n->previse=q;
+          ptr->next=q;
+      }
+      else
+      {
+          printf("\nCheck your position once again \n");
+      }
+
+    }
+}
+int NumberOfElementPresent(Node *head)
+{
+   int count=0;
+   while(head!=NULL)
+   {
+       count++;
+     head=head->next;
+
+   }
+   return count;
+}
+void DeletingFromeBeg(Node **ptr)
+{
+    Node *n=*ptr;
+    *ptr=n->next;
+    n->next->previse=NULL;
+    free(n);
+}
+void deletingFromEnd(Node ** ptr)
+{
+    Node *n=*ptr;
+    Node *q;
+   while(n->next!=NULL)
+   {
+     q=n;
+     n=n->next;
+   }
+   q->next=NULL;
+   free(n);
+}
+void deletingAtPerticularPosition(Node **ptr,int *position)
+{
+    Node *n=*ptr;
+    if(*(ptr)==NULL)
+    {
+        printf("List is empty");
+    }
+    else
+    {
+        if(*(position)==1)
+        {
+            *ptr=n->next;
+            //free(n);
+
+        }
+        else if(*(position)==NumberOfElementPresent(*ptr))
+        {
+            Node *t;
+            while(n->next!=NULL)
+            {
+                t=n;
+                n=n->next;
+            }
+            //n->previse->next=NULL;
+            t->next=NULL;
+            //free(n);
+        }
+        else if(*(position)>NumberOfElementPresent(*ptr))
+        {
+            printf("Your trying to deleting empty space");
+        }
+        else
+        {
+          Node * q;
+          Node *r=*ptr;
+          int count=1;
+          while(count<*(position))
+          {
+              q=r;
+              r=r->next;
+              count++;
+          }
+          r->next->previse=q;
+          q->next=r->next;
+
+        }
+    }
+}
+
+void SearchingForElement(Node *ptr,int *data)
+{
+    int count=0;
+    if(ptr==NULL)
+    {
+        printf("List is empty");
+    }
+    else{
+     while(ptr!=NULL)
+     {
+         count++;
+         if(ptr->data==*(data))
+         {
+            printf("\nYour data is found at position %d in list\n",count);
+            break;
+         }
+        ptr=ptr->next;
+     }
+     if(ptr==NULL)
+     {
+         printf("\nEntered data is not found in list\n");
+     }
+  }
+}
