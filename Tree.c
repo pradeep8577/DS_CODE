@@ -198,6 +198,12 @@ void DeleteNode(Node **ptr,int data)
       {
           parent=curr;
           curr=curr->right;
+          if(curr->left==NULL)
+          {
+              *ptr=curr;
+              free(parent);
+          }
+          else{
           while(1){
           if(curr->left==NULL)
           {
@@ -212,12 +218,18 @@ void DeleteNode(Node **ptr,int data)
               curr=curr->left;
           }
         }
+          }
       }
       else if(curr->right==NULL && curr->data==data)
       {
            parent=curr;
            curr=curr->left;
-
+           if(curr->right==NULL)
+          {
+              *ptr=curr;
+              free(parent);
+          }
+          else{
            while(1)
            {
                if(curr->right==NULL)
@@ -232,6 +244,7 @@ void DeleteNode(Node **ptr,int data)
                    curr=curr->right;
                }
            }
+          }
 
       }
       else if(curr->data==data && curr->left!=NULL && curr->right!=NULL)
@@ -349,6 +362,5 @@ void DeleteNode(Node **ptr,int data)
 
 
   }
-
 
 
