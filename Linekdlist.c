@@ -19,19 +19,21 @@ void ins_at_start(int data)
 
 void ins_at_end(int data)
 {
-      struct node *temp=(struct node*)malloc(sizeof(struct node));
-      temp->data=data;
-      temp->next=NULL;
-      if(head==NULL)
-      {
+        struct node *temp,*p;
+        temp=(struct node*)malloc(sizeof(struct node));
+        temp->data=data;
+        temp->next=NULL;
+        if(head==NULL)
+        {
             head=temp;
-            return ;
-      }
-      while(temp->next != NULL)
-      {
-            temp=temp->next;
-      }
-      temp->next=temp;
+            return;
+        }
+        p=head;
+        while(p->next!=NULL)
+        {
+            p=p->next;
+        }
+        p->next=temp;
 }
 
 void del_at_start()
