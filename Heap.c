@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define Max_size 10
 void Inserting(int arr[],int *last_position,int max_size,int data);
 void Deleting(int arr[],int *last_position);
@@ -62,6 +63,12 @@ void swap(int arr[],int data1,int data2)
 }
 void Inserting(int arr[],int *last_position,int max_size,int data)
 {
+    if(*(last_position)==max_size)
+    {
+        printf("Heap is full");
+        return;
+    }
+    else{
 
       int tem,parent;
       *(last_position)=*(last_position)+1;
@@ -70,10 +77,11 @@ void Inserting(int arr[],int *last_position,int max_size,int data)
 
       while(i>=0)
       {
-          parent=(i-1)/2;
+          parent=round((i-1)/2);
+          
          if(arr[parent]<arr[*(last_position)])
          {
-             printf("Value of parent:%d\n",parent);
+             
              tem=arr[*(last_position)];
              arr[*(last_position)]=arr[parent];
              arr[parent]=tem;
@@ -85,6 +93,7 @@ void Inserting(int arr[],int *last_position,int max_size,int data)
          }
 
       }
+    }
   }
 
 void Display(int arr[],int *last_position)
@@ -118,11 +127,11 @@ void Deleting(int arr[],int *last_position)
          printf("\n%d element is deleted\n",arr[*(last_position)]);
          *(last_position)=*(last_position)-1;
         int i=0,leftch,rightch,parent;
-        while(i<=*(last_position))
+        while(i<*(last_position)+1)
         {
             parent=i;
-            leftch=(2*i)+1;
-            rightch=(2*i)+2;
+            leftch=round((2*i)+1);
+            rightch=round((2*i)+2);
             if(arr[leftch]>arr[rightch])
             {
                 if(arr[leftch]>arr[parent])
@@ -137,7 +146,7 @@ void Deleting(int arr[],int *last_position)
             {
                 if(arr[rightch]>arr[parent])
                 {
-                    tem3=arr[rightch];2
+                    tem3=arr[rightch];
                     arr[rightch]=arr[parent];
                     arr[parent]=tem3;
                 }
