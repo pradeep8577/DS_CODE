@@ -75,15 +75,16 @@ void Inserting(int arr[],int *last_position,int max_size,int data)
       arr[*(last_position)]=data;
       int i=*(last_position);
 
-      while(i>=0)
+      while(i>0)
       {
           parent=round((i-1)/2);
-          
-         if(arr[parent]<arr[*(last_position)])
+
+
+         if(arr[parent]<arr[i])
          {
-             
-             tem=arr[*(last_position)];
-             arr[*(last_position)]=arr[parent];
+
+             tem=arr[i];
+             arr[i]=arr[parent];
              arr[parent]=tem;
              i=parent;
          }
@@ -130,8 +131,8 @@ void Deleting(int arr[],int *last_position)
         while(i<*(last_position)+1)
         {
             parent=i;
-            leftch=round((2*i)+1);
-            rightch=round((2*i)+2);
+            leftch=(2*i)+1;
+            rightch=(2*i)+2;
             if(arr[leftch]>arr[rightch])
             {
                 if(arr[leftch]>arr[parent])
@@ -141,8 +142,9 @@ void Deleting(int arr[],int *last_position)
                     arr[parent]=tem2;
                 }
                 i=leftch;
+                break;
             }
-            else
+            else if(arr[rightch]>arr[rightch])
             {
                 if(arr[rightch]>arr[parent])
                 {
@@ -151,6 +153,11 @@ void Deleting(int arr[],int *last_position)
                     arr[parent]=tem3;
                 }
                 i=rightch;
+                break;
+            }
+            else
+            {
+                return;
             }
         }
     }
