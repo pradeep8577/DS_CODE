@@ -15,6 +15,7 @@ int main()
         printf("1]Display heap\n");
         printf("2]Insert data\n");
         printf("3]Delete\n");
+        printf("0]Stop\n");
         printf("Enter choice:");
         scanf("%d",&choice);
         if(choice<=0)
@@ -114,7 +115,7 @@ void Display(int arr[],int *last_position)
 }
 void Deleting(int arr[],int *last_position)
 {
-    int tem1,tem2,tem3;
+    int tem1,tem2,tem3,tem;
     if(*(last_position)==-1)
     {
         printf("Heap is empty\n");
@@ -127,8 +128,23 @@ void Deleting(int arr[],int *last_position)
 
          printf("\n%d element is deleted\n",arr[*(last_position)]);
          *(last_position)=*(last_position)-1;
+         if(*(last_position)==2)
+         {
+             if(arr[1]>arr[0])
+             {
+                 tem=arr[0];
+                 arr[0]=arr[1];
+                 arr[1]=tem;
+
+             }
+             else
+             {
+                 return;
+             }
+         }
+         else{
         int i=0,leftch,rightch,parent;
-        while(i<*(last_position)+1)
+        while(i<=*(last_position))
         {
             parent=i;
             leftch=(2*i)+1;
@@ -160,5 +176,6 @@ void Deleting(int arr[],int *last_position)
                 return;
             }
         }
+      }
     }
 }
